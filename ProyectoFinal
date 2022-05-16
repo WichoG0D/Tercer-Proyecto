@@ -1,0 +1,348 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@WichoG0D 
+WichoG0D
+/
+Proyecto
+Private
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+Settings
+Proyecto/ProyectoFinal
+@WichoG0D
+WichoG0D Create ProyectoFinal
+Latest commit e44f1ae 3 minutes ago
+ History
+ 1 contributor
+320 lines (279 sloc)  6.47 KB
+  
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#include <string>
+#include <fstream>
+#include<stdlib.h>
+#include <vector>
+#include <ctype.h>
+
+using namespace std;
+
+//definir la funcion
+void Alta();
+void listas();
+void archivos();
+void eliminar();
+void modificar();
+
+int alta, * tratamiento, * costtratamiento, * subtotal, * total; char num; int* hora;
+string* nombre; string* descripcion; string* nomtratamiento,*nomhora;
+int main()
+{
+	int opc;
+	do
+	{
+		cout << "======== Bienvenido ========" << endl << "======== Elija una de las siguientes opciones ========" << endl << "1.-Dar de alta una cita" << endl << "2.- Mostrar citas programadas" << endl << "3.- Limpiar pantalla" << endl << "4.-Modificar cita" << endl << "5.-Eliminar cita" << endl << "6.-Salir" << endl;
+		cin >> opc;
+	} while (opc != 1 && opc != 2 && opc != 3 && opc != 4 && opc != 5 && opc != 6);
+	switch (opc)
+	{
+	case 1:
+		Alta();
+		return main();
+		break;
+
+	case 2:
+		listas();
+		return main();
+		break;
+
+	case 3:
+		system("cls"); 
+		return main();
+		break;
+
+	case 4:
+		modificar();
+		return main();
+		break;
+
+	case 5:
+		eliminar();
+		return main();
+		break;
+
+	case 6:
+		archivos();
+		break;
+
+	default:
+		cout << "Ingrese una opcion valida" << endl;
+		break;
+	}
+}
+
+void Alta()
+{
+		cout << "Digite la cantidad de citas que desea dar de alta" << endl;
+		cin >> alta;
+	
+	hora = new int[alta];
+	nomhora = new string[alta];
+	descripcion = new string[alta];
+	tratamiento = new int[alta];
+	nomtratamiento = new string[alta];
+	costtratamiento = new int[alta];
+	nombre = new string[alta];
+	subtotal = new int[alta];
+	total = new int[alta];
+
+	for (int i = 0; i < alta; i++)
+	{
+			while (getchar() != '\n');
+			cout << "Ingrese nombre" << endl;
+			getline(cin, nombre[i]);
+
+		cout << "Ingrese su descripcion" << endl;
+		getline(cin, descripcion[i]);
+
+		cout << "Selecciones la hora a agendar" << endl << "1.-10:00" << endl << "2.-12:00" << endl<<"3.-14:00"<<endl<<"4.-16:00"<<endl;
+		cin >> hora[i];
+		do
+		{
+			switch (hora[i])
+			{
+			case 1:
+				cout << "10:00" << endl;
+				nomhora[i] = "10:00";
+				break;
+
+			case 2:
+				cout << "12:00" << endl;
+				nomhora[i] = "12:00";
+				break;
+
+			case 3:
+				cout << "14:00" << endl;
+				nomhora[i] = "14:00";
+				break;
+
+			case 4:
+				cout << "16:00" << endl;
+				nomhora[i] = "16:00";
+				break;
+
+			default:
+				cout << "Ingrese una hora valida" << endl;
+				break;
+			}
+		} while (hora[i] != 1 && hora[i] != 2 && hora[i] != 3 && hora[i] != 4);
+
+		cout << "Seleccione su tratamiento" << endl<<"1.-Limpieza de dientes"<<endl<<"2.-Empaste"<<endl<<"3.-Corona Dental"<<endl<<"4.-Blanqueamineto Denatal"<<endl;
+		cin >> tratamiento[i];
+		do
+		{
+			switch (tratamiento[i])
+			{
+			case 1:
+				cout << "Limpieza Dental" << endl;
+				nomtratamiento[i] = "Limpieza Dental";
+				costtratamiento[i] = 400;
+				break;
+
+			case 2:
+				cout << "Empaste" << endl;
+				nomtratamiento[i] = "Empaste";
+				costtratamiento[i] = 150;
+				break;
+
+			case 3:
+				cout << "Corona Dental" << endl;
+				nomtratamiento[i] = "Corona Dental";
+				costtratamiento[i] = 500;
+				break;
+
+			case 4:
+				cout << "Blanqueamiento Dental" << endl;
+				nomtratamiento[i] = "Blanqueamineto Dental";
+				costtratamiento[i] = 1500;
+				break;
+
+			default:
+				cout << "Ingrese un tratamiento valido"<<endl;
+				break;
+			}
+		} while (tratamiento[i] != 1 && tratamiento[i] != 2 && tratamiento[i]!=3 && tratamiento[i]!=4);
+
+	}
+	
+}
+
+void listas()
+{
+	for (int i = 0; i < alta; i++)
+	{
+		if (Alta == 0)
+		{
+			cout << "No hay registros en el programa" << i + 1 << endl;
+		}
+		else
+		{
+			cout << "====== Registros ======" << i + 1 << endl;
+			cout << nombre[i] << endl;
+			cout << descripcion[i] << endl;
+			cout << nomhora[i] << endl;
+			cout << nomtratamiento[i] << endl;
+		
+		}
+	}
+}
+
+void archivos()
+{
+	ofstream archivo; 
+	string nombrearchivo;
+	string texto;
+	int texto2;
+
+	nombrearchivo = "altascitas";
+
+	archivo.open(nombrearchivo.c_str(), ios::out);
+
+	if (archivo.fail())
+	{
+		cout << "El archivo no se pudo crear, intente nuevamente";
+		exit(1);
+	}
+
+	archivo << "Nombre" << "\t"<< "\t";
+	archivo << "Descripcion" << "\t"<< "\t";
+	archivo << "Hora" << "\t";
+	archivo << "Tratamiento" << "\t";
+	archivo << "Subtotal" << "\t";
+	archivo << "Total" << "\n";
+
+	for (int i = 0; i < alta; i++)
+	{
+		do
+		{
+			if (descripcion[i] == "")
+			{
+				while (getchar() != '\n');
+				cout << "Favor de redactar la descripcion" << endl;
+				getline(cin, descripcion[i]);
+			}
+		} while (descripcion[i]=="");
+
+			texto = nombre[i];
+			archivo << texto << "\t";
+			texto = descripcion[i];
+			archivo << texto << "\t";
+			texto = nomhora[i];
+			archivo << texto << "\t";
+			texto = nomtratamiento[i];
+			archivo << texto << "\t";
+			subtotal[i] = (costtratamiento[i]);
+			texto2 = subtotal[i];
+			archivo << texto2 << "\t "<< "\t";
+			total[i] = (subtotal[i] + (subtotal[i] * .16));
+			texto2 = total[i];
+			archivo << texto2 << "\t "<< "\t";
+		
+	}
+	archivo.close();
+	exit(0);
+}
+
+void eliminar()
+{
+	int j;
+	do
+	{
+		cout << "ingrese el  registro a eliminar"<<endl;
+		for (int i = 0; i < alta; i++)
+		{
+			cout << 1 + i << " .-" << nombre[i] << endl;
+		}
+		cin >> j;
+		if (j<1 || j>alta)
+		{
+			cout << "El valor es invalido, ingrese nuevamente" << endl;
+		}
+	} while (j<1 || j>alta);
+	j = j - 1;
+	for (int i = j; i == j; i++)
+	{
+		cout << "Eliminando registro" << j + 1 << endl;
+
+		descripcion[i] = " ";
+		nombre[i] = " ";
+		hora[i] = 0;
+		tratamiento[i] = 0;
+		
+	}
+}
+
+void modificar()
+{
+	int j, opcion;
+	cout << "ingrese el numero registro a modificar"<<endl;
+	for (int i = 0; i < alta; i++)
+	{
+		cout << 1 + i << " .-" << nombre[i] << endl;
+	}
+	cin >> j;
+	j = j - 1;
+	cout << "Ingrese el apartado a modificar" << endl<<"1.-Nombre"<<endl<<"2.-Descripcion"<<endl<<"3.-Hora"<<endl<<"4.-Tratamiento"<<endl;
+	cin >> opcion;
+	do
+	{
+		switch (opcion)
+		{
+		case 1:
+			for (int i = j; i == j; i++)
+			{
+				while (getchar() != '\n');
+				cout << "Ingrese Descripcion" << endl;
+				getline(cin, nombre[i]);
+			}
+			break;
+		case 2:
+			for (int i = j; i == j; i++)
+			{
+				while (getchar() != '\n');
+				cout << "Ingrese nombre" << endl;
+				getline(cin, descripcion[i]);
+			}
+			break;
+
+		case 3:
+			for (int i = j; i == j; i++)
+			{
+				cout << "Ingrese hora" << endl << "1.-10:00" << endl << "2.-12:00" << endl << "3.-14:00" << endl << "4.-16:00" << endl;
+				cin >> hora[i];
+				break;
+			}
+		case 4:
+			for (int i = j; i == j; i++)
+			{
+				cout << "Ingrese tratamineto" << endl;
+				cin >> tratamiento[i];
+			}
+			break;
+		default:
+			cout << "Ingrese una opcion valida" << endl;
+			break;
+		}
+	} while (opcion != 1 && opcion != 2 && opcion != 3 && opcion != 4);
+
+}
